@@ -1,16 +1,19 @@
 .sidebar{
 	height:100vh;
-	flex:0.2;
+	/* flex:0.2; */
 	color:white;
-	min-width:230px;
+	width:230px;
 	background-color: #000;
 	padding:0 10px;
 }
 
 .sidebar__logo{
-	margin-right:auto;
-	height:70px;
-	padding:10px;
+	text-align: center;
+	height: 65px;
+	margin-top: 25px;
+	width: 145px;
+	padding: 10px;
+	margin-bottom: 18px;
 }
 
 .sidebar__title{

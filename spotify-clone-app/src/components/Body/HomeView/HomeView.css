@@ -1,0 +1,17 @@
+section{
+	margin-top:25px;
+}
+
+.cardsContainer{
+	display:flex;
+}
+
+.sectionTitle{
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 28px;
+	letter-spacing: -.04em;
+	text-transform: none;
+	margin-bottom: 16px;
+	text-transform: uppercase;
+}

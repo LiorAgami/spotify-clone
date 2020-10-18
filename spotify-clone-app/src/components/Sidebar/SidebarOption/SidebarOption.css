@@ -7,6 +7,12 @@
 	transition: 200ms color ease-in;
 }
 
+.sidebarOption.active{
+	color:white;
+	background-color: #282828;
+	border-radius: 4px;
+}
+
 .sidebar > hr{
 	border:1px solid #282828;
 	width:90%;

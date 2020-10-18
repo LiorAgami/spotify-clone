@@ -20,11 +20,11 @@ function Footer() {
 				</div>
 			</div>
 			<div className="footer__center">
-				<ShuffleIcon className="footer__green"/>
+				<ShuffleIcon className=""/>
 				<SkipPreviousIcon className="footer__icon"/>
 				<PlayCircleOutlineIcon fontSize="large" className="footer__icon"/>
 				<SkipNextIcon className="footer__icon"/>
-				<RepeatIcon className="footer__green"/>
+				<RepeatIcon className=""/>
 			</div>
 			<div className="footer__right">
 				<Grid container spacing={2}>

@@ -61,5 +61,9 @@
 }
 
 .footer__right * .MuiSlider-root{
+	color:#fff;
+}
+
+.MuiSlider-root:hover{
 	color:green;
 }

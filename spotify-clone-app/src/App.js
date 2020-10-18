@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Login from './Login';
+import Login from './containers/Login/Login';
 import { getTokenFromUrl } from './spotify';
 import SpotifyWebApi from "spotify-web-api-js";
-import Player from "./Player";
-import {useDataLayerValue} from './DataLayer';
+import Player from "./containers/Player/Player";
+import {useDataLayerValue} from './state/DataLayer';
 
 const spotify = new SpotifyWebApi();
 
@@ -39,6 +39,30 @@ function App() {
 				dispatch({
 					type: 'SET_PLAYLISTS',
 					playlists
+				})
+			});
+
+			spotify.getPlaylist('37i9dQZEVXcGT4LTcEgTYQ').then((discover_weekly) => {
+
+				dispatch({
+					type: 'SET_DISCOVER_WEEKLY',
+					discover_weekly
+				})
+			});
+
+			spotify.getFeaturedPlaylists().then((featured_playlists) => {
+
+				dispatch({
+					type: 'SET_FEATURED_PLAYLISTS',
+					featured_playlists
+				})
+			});
+
+			spotify.getMyRecentlyPlayedTracks().then((recent_played) => {
+
+				dispatch({
+					type: 'SET_RECENT_PLAYED_PLAYLISTS',
+					recent_played
 				})
 			});
 		}
