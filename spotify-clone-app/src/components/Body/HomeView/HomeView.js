@@ -13,7 +13,9 @@ function HomeView() {
 			<h2 className="sectionTitle">FEATURED PLAYLISTS</h2>
 			<div className="cardsContainer">
 				{featured_playlists?.playlists?.items.map((playlist, ind) =>(
-					<PlaylistCard img={playlist?.images[0]?.url}
+					<PlaylistCard
+						playlistId={playlist.id}
+						img={playlist?.images[0]?.url}
 						title={playlist.name}
 						desc={playlist.description}
 						key={ind}

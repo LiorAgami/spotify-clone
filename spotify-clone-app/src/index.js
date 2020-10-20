@@ -5,13 +5,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { DataLayer } from './state/DataLayer';
 import reducer, { initialState } from './state/reducer';
+import { SoundLayer } from "./state/SoundLayer";
+import soundReducer, {soundInitialState} from "./state/SoundReducer";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <DataLayer initialState={initialState} reducer={reducer}>
-    <App />
-    </DataLayer>
-  </React.StrictMode>,
+	<React.StrictMode>
+		<DataLayer initialState={initialState} reducer={reducer}>
+			<SoundLayer initialState={soundInitialState} reducer={soundReducer}>
+				<App/>
+			</SoundLayer>
+		</DataLayer>
+	</React.StrictMode>,
   document.getElementById('root')
 );
 

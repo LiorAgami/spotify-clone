@@ -1,14 +1,20 @@
 import React from 'react';
 import './Body.css';
 import PlaylistView from './PlaylistView/PlaylistView';
+import {useDataLayerValue} from '../../state/DataLayer';
 import HomeView from './HomeView/HomeView';
 
 function Body({ spotify }) {
-	// const [{discover_weekly}, dispatch] = useDataLayerValue();
+	const [{current_playlist}, dispatch] = useDataLayerValue();
+
 	return (
 		<div className="body">
-			{/* <PlaylistView spotify={spotify} /> */}
-			<HomeView />
+			{
+				current_playlist?.tracks?.items.length
+					? <PlaylistView spotify={spotify} />
+					: <HomeView />
+			}
+
 		</div>
 	)
 }

@@ -3,8 +3,12 @@ export const initialState = {
 	playlists: [],
 	featured_playlists: [],
 	recent_played_playlists: [],
+	current_playlist: [],
 	playing: false,
 	item: null,
+	tracks: null,
+	track: null,
+	active_tab:'Home',
 	//REMOVE after finished developing.
 	// token:'BQCwXyZRHADbSP0wpajXA2uG5wztDGD5jGvBAwUdJb9L0_iHy3oMFIkNJpHyI0aVtNyTVWXZ73cXaXoIInjAWRjFYewyTapnEBdtZ0jzncybLTzpxfDR3MdymfS3HfWE5kOJ8rcgQEr8MhpE4cvDNpsAyEfpfmKstCKw-sAnDTV893f-1hsM'
 };
@@ -18,6 +22,11 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				user:action.user
+			};
+		case 'SET_ACTIVE_TAB':
+			return {
+				...state,
+				active_tab:action.active_tab
 			};
 		case 'SET_TOKEN':
 			return {
@@ -49,7 +58,23 @@ const reducer = (state, action) => {
 				...state,
 				recent_played_playlists:action.recent_played
 			};
-
+		case 'SET_CURRENT_PLAYLIST':
+			return {
+				...state,
+				current_playlist:action.playlist_items
+			};
+			case 'SET_TRACKS': {
+				return {
+					...state,
+					tracks: action.tracks
+				};
+			}
+			case 'SET_TRACK': {
+				return {
+					...state,
+					track: action.track
+				};
+			}
 		default:
 			return state;
 	}

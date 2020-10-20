@@ -1,15 +1,23 @@
 .songRow{
 	margin-left:20px;
-	padding:20px;
 	display:flex;
 	align-items:center;
 	z-index:100;
 	color:white;
 }
 
-.songRow:hover{
+.songRow_inner{
+    margin: 15px 30px;
+	padding: 10px;
+	border-radius: 4px;
+	display:flex;
+	width:100%;
+	align-items: center;
+}
+
+.songRow .songRow_inner:hover{
 	/* cursor:pointer; */
-	background-color:black;
+	background-color:hsla(0,0%,100%,.1);
 	opacity:.8;
 }
 
@@ -24,7 +32,8 @@
 }
 
 .songRow:hover .songRow__index__icon{
-	display:block;
+	display: flex;
+	justify-content: center;
 }
 
 .songRow__index__number{

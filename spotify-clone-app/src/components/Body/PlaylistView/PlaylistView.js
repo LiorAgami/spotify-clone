@@ -8,29 +8,28 @@ import Header from '../Header/Header';
 
 
 function PlaylistView({ spotify }) {
-
-	const [{discover_weekly}, dispatch] = useDataLayerValue();
+	const [{current_playlist, discover_weekly}, dispatch] = useDataLayerValue();
 
 	return (
 		<div>
 			<Header spotify={spotify}/>
 			<div className="body__info">
-				<img src={discover_weekly?.images[0].url} alt=""/>
+				<img src={current_playlist?.images[0].url} alt=""/>
 				<div className="body__infoText">
 					<strong>PLAYLIST</strong>
-					<h2>Discover Weekly</h2>
-					<p>{discover_weekly?.description}</p>
+					<h2>{current_playlist?.name}</h2>
+					<p>{current_playlist?.description}</p>
 				</div>
 			</div>
 
 			<div className="body__songs">
 			<div className="body__icons">
-				<PlayCircleFilledIcon  className="body__shuffle"/>
+				<PlayCircleFilledIcon  className="body__shuffle green"/>
 				<FavoriteIcon fontSize="large"/>
 				<MoreHorizIcon />
 			</div>
 
-			{discover_weekly?.tracks.items.map((item, ind) => (
+			{current_playlist?.tracks.items.map((item, ind) => (
 				<SongRow index={ind} track={item.track} />
 			))}
 

@@ -15,3 +15,8 @@ section{
 	margin-bottom: 16px;
 	text-transform: uppercase;
 }
+
+.green{
+	color:#1ed15e;
+	border-radius: 25px;
+}

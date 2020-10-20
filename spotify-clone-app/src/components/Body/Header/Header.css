@@ -22,8 +22,23 @@
 }
 
 .header__right{
+	cursor:pointer;
+	height: 33px;
 	display:flex;
 	align-items:center;
+	background: #000;
+	border-radius: 25px;
+	font-size: 14px;
+	padding: 0px 10px 0px 2px;
+}
+
+.header__right:hover{
+	background-color:hsla(0,0%,100%,.1);
+}
+
+.header__right .MuiAvatar-root{
+	width:30px;
+	height:30px;
 }
 
 .header__right > h4{

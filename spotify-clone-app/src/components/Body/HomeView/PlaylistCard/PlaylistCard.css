@@ -8,6 +8,7 @@
 
 .cardRow__card:hover{
 	background:#282828;
+	cursor:pointer;
 }
 
 .cardRow__card{
@@ -76,11 +77,16 @@
 	align-items: center;
 	justify-content: center;
 	background-color: #1db954;
-	transition: 600ms;
+	transition: 500ms;
 	opacity: 0;
 	border-radius: 20px;
 	visibility:hidden;
 	position:absolute;
 	bottom:0;
 	left:5px;
+}
+
+.cardRow__card__inner__imgContainer__playIcon:hover{
+	transform: scale(1.1);
+	cursor:auto;
 }
