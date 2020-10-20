@@ -50,7 +50,7 @@ function App() {
 				})
 			});
 
-			spotify.getFeaturedPlaylists().then((featured_playlists) => {
+			spotify.getFeaturedPlaylists({limit:10}).then((featured_playlists) => {
 
 				dispatch({
 					type: 'SET_FEATURED_PLAYLISTS',
@@ -58,7 +58,7 @@ function App() {
 				})
 			});
 
-			spotify.getMyRecentlyPlayedTracks().then((recent_played) => {
+			spotify.getMyRecentlyPlayedTracks({limit:10}).then((recent_played) => {
 
 				dispatch({
 					type: 'SET_RECENT_PLAYED_PLAYLISTS',
@@ -69,7 +69,6 @@ function App() {
 	}, []);
 
 	return (
-		//BEM
 		<div className="app">
 			{
 				token ? (
@@ -79,7 +78,6 @@ function App() {
 				)
 			}
 		</div>
-
 	);
 }
 

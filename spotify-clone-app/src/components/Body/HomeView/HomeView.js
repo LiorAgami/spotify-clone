@@ -18,7 +18,7 @@ function HomeView() {
 						img={playlist?.images[0]?.url}
 						title={playlist.name}
 						desc={playlist.description}
-						key={ind}
+						key={playlist.id + String(Math.random())}
 					/>
 				))}
 
@@ -32,7 +32,10 @@ function HomeView() {
 					<PlaylistCard img={playlist?.track?.album.images[0]?.url}
 						title={playlist?.track.name}
 						desc={playlist?.track?.artists.map((artist) => artist.name).join(", ")}
-						key={playlist.id}
+						key={playlist.id + String(Math.random())}
+						trackId={playlist?.track?.id}
+						isTrack={true}
+
 					/>
 				))}
 

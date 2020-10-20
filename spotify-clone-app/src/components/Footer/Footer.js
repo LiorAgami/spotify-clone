@@ -14,7 +14,7 @@ import {useSoundLayerValue} from "../../state/SoundLayer";
 
 
 function Footer() {
-	const [{track, tracks}, dispatch] = useDataLayerValue();
+	const [{track, tracks, current_playlist, trackInd}, dispatch] = useDataLayerValue();
 	const [{audio, playing, volume, repeat, shuffle}, soundDispatch] = useSoundLayerValue();
 
 	const startPlaying = () => {
@@ -22,10 +22,11 @@ function Footer() {
 			type: "SET_PLAYING",
 			playing: true
 		});
-		soundDispatch({
-			type: "SET_VOLUME",
-			volume: volume / 100
-		});
+
+		// soundDispatch({
+		// 	type: "SET_VOLUME",
+		// 	volume: volume / 100
+		// });
 	};
 
 	const stopPlaying = () => {
@@ -61,6 +62,35 @@ function Footer() {
 			volume: value / 100
 		});
 	};
+
+	let playNextSong = () => {
+		// if(!current_playlist?.tracks?.items[trackInd + 1]) return;
+
+		// dispatch({
+		// 	type: 'SET_TRACK',
+		// 	track: current_playlist.tracks.items[trackInd + 1],
+		// 	index:trackInd + 1
+		// });
+
+		// let audio = new Audio(current_playlist.tracks.items[trackInd + 1].preview_url);
+
+		// audio.loop = repeat;
+		// soundDispatch({
+		// 	type: 'SET_AUDIO',
+		// 	audio: audio
+		// });
+
+		// soundDispatch({
+		// 	type: 'SET_PLAYING',
+		// 	playing: true,
+		// });
+
+		// soundDispatch({
+		// 	type: "SET_VOLUME",
+		// 	volume: volume / 100
+		// });
+
+	}
 
 	if(audio) {
 		audio.onended = () => {
@@ -107,7 +137,7 @@ function Footer() {
 			}
 		}
 	}
-	debugger;
+
 	return (
 		<div className="footer">
 			<div className="footer__left">
@@ -135,7 +165,7 @@ function Footer() {
 						fontSize='large'
 						className='footer__icon'/>
 				}
-				<SkipNextIcon className="footer__icon"/>
+				<SkipNextIcon onClick={playNextSong} className="footer__icon"/>
 				<RepeatIcon  onClick={track? setRepeat : null} className={repeat ? 'footer__green' : 'footer__icon'}/>
 			</div>
 			<div className="footer__right">
@@ -153,6 +183,7 @@ function Footer() {
 							onChange={handleChange}
 							min={0}
 							max={100}
+							value={volume * 100}
 						/>
 					</Grid>
 				</Grid>

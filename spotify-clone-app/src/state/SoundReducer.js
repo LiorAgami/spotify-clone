@@ -1,7 +1,7 @@
 export const soundInitialState = {
     audio: null,
     playing: false,
-    volume: 0.3,
+    volume: 0.2,
     repeat: false,
     shuffle: false,
 };

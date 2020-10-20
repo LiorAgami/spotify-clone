@@ -3,19 +3,17 @@ export const initialState = {
 	playlists: [],
 	featured_playlists: [],
 	recent_played_playlists: [],
+	library_playlists: [],
 	current_playlist: [],
 	playing: false,
 	item: null,
 	tracks: null,
 	track: null,
+	trackInd: null,
 	active_tab:'Home',
-	//REMOVE after finished developing.
-	// token:'BQCwXyZRHADbSP0wpajXA2uG5wztDGD5jGvBAwUdJb9L0_iHy3oMFIkNJpHyI0aVtNyTVWXZ73cXaXoIInjAWRjFYewyTapnEBdtZ0jzncybLTzpxfDR3MdymfS3HfWE5kOJ8rcgQEr8MhpE4cvDNpsAyEfpfmKstCKw-sAnDTV893f-1hsM'
 };
 
 const reducer = (state, action) => {
-
-	//Action -> type, [payload]
 
 	switch(action.type){
 		case 'SET_USER':
@@ -43,6 +41,11 @@ const reducer = (state, action) => {
 				...state,
 				discover_weekly:action.discover_weekly
 			};
+		case 'SET_LIBRARY_PLAYLISTS':
+			return {
+				...state,
+				library_playlists:action.library_playlists
+			};
 		case 'SET_FEATURED_PLAYLISTS':
 			return {
 				...state,
@@ -63,18 +66,19 @@ const reducer = (state, action) => {
 				...state,
 				current_playlist:action.playlist_items
 			};
-			case 'SET_TRACKS': {
-				return {
-					...state,
-					tracks: action.tracks
-				};
-			}
-			case 'SET_TRACK': {
-				return {
-					...state,
-					track: action.track
-				};
-			}
+		case 'SET_TRACKS': {
+			return {
+				...state,
+				tracks: action.tracks
+			};
+		}
+		case 'SET_TRACK': {
+			return {
+				...state,
+				track: action.track,
+				trackInd:action.index
+			};
+		}
 		default:
 			return state;
 	}

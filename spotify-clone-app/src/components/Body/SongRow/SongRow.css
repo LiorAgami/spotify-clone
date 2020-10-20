@@ -20,6 +20,9 @@
 	background-color:hsla(0,0%,100%,.1);
 	opacity:.8;
 }
+.songRow.active .songRow_inner{
+	background-color:hsla(0,0%,100%,.3);
+}
 
 .songRow__index{
 	width:20px;
@@ -55,6 +58,11 @@
 
 .songRow__info > h1{
 	font-size:16px;
+	font-weight:400;
+}
+.songRow__info > h1.green{
+	color:#1ed15e;
+	
 }
 
 .songRow__info > p{

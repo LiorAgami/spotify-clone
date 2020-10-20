@@ -1,10 +1,13 @@
 .sidebarOption{
 	display:flex;
 	align-items:center;
-	color:grey;
+	color:rgb(179,179,179) ;
 	height:40px;
 	cursor:pointer;
 	transition: 200ms color ease-in;
+}
+.sidebarOption h4{
+	font-weight: 500;
 }
 
 .sidebarOption.active{

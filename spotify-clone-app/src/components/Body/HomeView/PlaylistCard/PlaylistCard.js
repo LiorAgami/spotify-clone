@@ -27,10 +27,15 @@ function PlaylistCard(props) {
 	}
 
 	function startPlayingFirstSong(playlist){
+		soundDispatch({
+			type: 'SET_PLAYING',
+			playing: false,
+		});
 
 		dispatch({
 			type: 'SET_TRACK',
-			track: playlist?.tracks?.items[0]?.track
+			track: playlist?.tracks?.items[0]?.track,
+			index:0
 		});
 
 		let audio = new Audio(playlist?.tracks?.items[0]?.track.preview_url);
@@ -51,6 +56,37 @@ function PlaylistCard(props) {
 		});
 
 		playlistWasUpdated.unsubscribe();
+
+	}
+
+	function getTrackData(){
+		dispatch({
+			type: 'SET_ACTIVE_TAB',
+			active_tab:''
+		})
+
+		const track_id = props?.trackId || '';
+		if(!track_id) return;
+
+		return spotify.getTrack(track_id).then((playlist_items) => {
+			let adjusted_playlist = {
+				isTrack:true,
+				tracks:{
+					items:[{track:playlist_items}],
+					artists:[playlist_items.artists]
+				},
+				images:[{url:playlist_items?.album?.images[0]?.url}],
+				name:playlist_items.name,
+				description:playlist_items.description
+			};
+
+			dispatch({
+				type: 'SET_CURRENT_PLAYLIST',
+				playlist_items:adjusted_playlist
+			});
+
+			playlistWasUpdated.next(adjusted_playlist);
+		});
 	}
 
 	function getPlaylistData(){
@@ -58,11 +94,12 @@ function PlaylistCard(props) {
 			type: 'SET_ACTIVE_TAB',
 			active_tab:''
 		})
-		
+
 		const playlist_id = props?.playlistId || '';
 		if(!playlist_id) return;
 
 		return spotify.getPlaylist(playlist_id).then((playlist_items) => {
+
 			dispatch({
 				type: 'SET_CURRENT_PLAYLIST',
 				playlist_items
@@ -71,8 +108,10 @@ function PlaylistCard(props) {
 		});
 	}
 
+
+
 	return (
-		<div className="cardsContainer__card" onClick={getPlaylistData}>
+		<div className="cardsContainer__card" onClick={!props.isTrack ? getPlaylistData : getTrackData}>
 			<div className="cardRow">
 				<div className="cardRow__card">
 					<div className="cardRow__card__inner">
