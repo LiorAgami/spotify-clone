@@ -41,6 +41,14 @@ function App() {
 					type: 'SET_PLAYLISTS',
 					playlists
 				})
+			})
+
+			spotify.getMyTopArtists().then((top_artists) => {
+				debugger;
+				dispatch({
+					type: 'SET_TOP_ARTISTS',
+					top_artists
+				})
 			});
 
 			spotify.getPlaylist('37i9dQZEVXcGT4LTcEgTYQ', {market:'IL'}).then((discover_weekly) => {

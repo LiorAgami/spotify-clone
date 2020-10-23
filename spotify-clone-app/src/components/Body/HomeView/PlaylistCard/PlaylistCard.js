@@ -27,6 +27,7 @@ function PlaylistCard( props ) {
 	}
 
 	const startPlayingFirstSong = (playlist) => {
+		let track = playlist?.tracks?.items[0]?.track;
 
 		dispatch({
 			type: 'SET_CURRENT_PLAYING_PLAYLIST',
@@ -40,11 +41,11 @@ function PlaylistCard( props ) {
 
 		dispatch({
 			type: 'SET_TRACK',
-			track: playlist?.tracks?.items[0]?.track,
+			track,
 			index:0
 		});
 
-		let audio = new Audio(playlist?.tracks?.items[0]?.track.preview_url);
+		let audio = new Audio(track.preview_url);
 		audio.loop = repeat;
 
 		soundDispatch({
@@ -62,8 +63,8 @@ function PlaylistCard( props ) {
 			volume: volume
 		});
 
+		document.title = `${track.name} · ${track.artists.map((artist) => artist.name).join(', ')}`;
 		playlistWasUpdated.unsubscribe();
-
 	}
 
 	const getTrackData = () => {

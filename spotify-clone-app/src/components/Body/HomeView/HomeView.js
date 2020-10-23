@@ -5,7 +5,7 @@ import './HomeView.css';
 
 function HomeView() {
 
-	const [{ featured_playlists, recent_played_playlists }, dispatch] = useDataLayerValue();
+	const [{ featured_playlists, recent_played_playlists, top_artists }] = useDataLayerValue();
 
 	return (
 	<div>
@@ -24,7 +24,7 @@ function HomeView() {
 			</div>
 		</section>
 		<section>
-			<h2 className="sectionTitle">RECENTLY PLAYED</h2>
+			<h2 className="sectionTitle">RECENTLY PLAYED SONGS</h2>
 			<div className="cardsContainer">
 				{recent_played_playlists?.items?.map((playlist, ind) =>(
 					<PlaylistCard img={playlist?.track?.album.images[0]?.url}
@@ -33,6 +33,18 @@ function HomeView() {
 						key={playlist.id + String(Math.random())}
 						trackId={playlist?.track?.id}
 						isTrack={true}
+					/>
+				))}
+			</div>
+		</section>
+		<section>
+			<h2 className="sectionTitle">TOP ARTISTS</h2>
+			<div className="cardsContainer">
+				{top_artists?.items?.map((artist, ind) =>(
+					<PlaylistCard img={artist?.images[0]?.url}
+						title={artist?.name}
+						desc="Artist"
+						key={artist.id + String(Math.random())}
 					/>
 				))}
 			</div>

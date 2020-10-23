@@ -10,6 +10,10 @@ import {Grid, Slider} from '@material-ui/core';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+
 import './Footer.css';
 
 
@@ -59,11 +63,12 @@ function Footer() {
 	};
 
 	const playPrevOrNextSong = (songIndex) => {
-		if(!current_playing_playlist?.tracks?.items[songIndex]?.track) return;
+		let track = current_playing_playlist?.tracks?.items[songIndex]?.track;
+		if(!track) return;
 
 		dispatch({
 			type: 'SET_TRACK',
-			track: (current_playing_playlist.tracks.items[songIndex].track),
+			track,
 			index: songIndex
 		});
 
@@ -72,7 +77,7 @@ function Footer() {
 			playing: false,
 		});
 
-		let audio = new Audio(current_playing_playlist.tracks.items[songIndex].track?.preview_url);
+		let audio = new Audio(track?.preview_url);
 		audio.loop = repeat;
 
 		soundDispatch({
@@ -90,13 +95,14 @@ function Footer() {
 			volume: volume
 		});
 
+		document.title = `${track.name} · ${track.artists.map((artist) => artist.name).join(', ')}`;
 	}
 
 
 	if(audio) {
-		audio.onended = () => {debugger;
+		audio.onended = () => {
 			if(shuffle) {
-				
+
 				let randomTrackInd = Math.floor((Math.random() * current_playing_playlist?.tracks?.items?.length));
 				let randomTrack =current_playing_playlist?.tracks?.items[randomTrackInd]?.track;
 

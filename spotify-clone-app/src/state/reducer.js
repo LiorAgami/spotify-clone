@@ -6,6 +6,7 @@ export const initialState = {
 	library_playlists: [],
 	current_displayed_playlist: [],
 	current_playing_playlist: [],
+	top_artists: [],
 	playing: false,
 	item: null,
 	tracks: null,
@@ -72,6 +73,12 @@ const reducer = (state, action) => {
 				...state,
 				current_playing_playlist:action.playlist_items
 			};
+		case 'SET_TOP_ARTISTS': {
+			return {
+				...state,
+				top_artists: action.top_artists
+			};
+		}
 		case 'SET_TRACKS': {
 			return {
 				...state,
