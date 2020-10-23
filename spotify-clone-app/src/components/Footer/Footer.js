@@ -14,7 +14,7 @@ import './Footer.css';
 
 
 function Footer() {
-	const [{ current_playing_playlist, current_displayed_playlist, track, trackInd, tracks }, dispatch] = useDataLayerValue();
+	const [{ current_playing_playlist, track, trackInd }, dispatch] = useDataLayerValue();
 	const [{ audio, playing, volume, repeat, shuffle }, soundDispatch] = useSoundLayerValue();
 
 	const startPlaying = (e) => {
@@ -22,11 +22,6 @@ function Footer() {
 			type: "SET_PLAYING",
 			playing: true
 		});
-
-		// soundDispatch({
-		// 	type: "SET_VOLUME",
-		// 	volume: volume / 100
-		// });
 	};
 
 	const stopPlaying = (e) => {
@@ -63,7 +58,7 @@ function Footer() {
 		});
 	};
 
-	const playPrevOrNextSong = (songIndex) => {debugger;
+	const playPrevOrNextSong = (songIndex) => {
 		if(!current_playing_playlist?.tracks?.items[songIndex]?.track) return;
 
 		dispatch({
@@ -98,51 +93,49 @@ function Footer() {
 	}
 
 
-	// if(audio) {
-	// 	audio.onended = () => {
-	// 		if(shuffle) {
-	// 			while(true) {
-	// 				let randomTrackNumber = Math.floor((Math.random() * tracks.items.length));
-	// 				let randomTrack = tracks.items[randomTrackNumber].track;
+	if(audio) {
+		audio.onended = () => {debugger;
+			if(shuffle) {
+				
+				let randomTrackInd = Math.floor((Math.random() * current_playing_playlist?.tracks?.items?.length));
+				let randomTrack =current_playing_playlist?.tracks?.items[randomTrackInd]?.track;
 
-	// 				if(track !== randomTrack) {
-	// 					dispatch({
-	// 						type: 'SET_TRACK',
-	// 						track: randomTrack
-	// 					});
+				if(track === randomTrack) return;
 
-	// 					let wasPlaying = playing;
-	// 					soundDispatch({
-	// 						type: 'SET_PLAYING',
-	// 						playing: false,
-	// 					});
+				dispatch({
+					type: 'SET_TRACK',
+					track: randomTrack,
+					index:randomTrackInd
+				});
 
-	// 					let audio = new Audio(randomTrack.preview_url);
-	// 					audio.loop = repeat;
-	// 					soundDispatch({
-	// 						type: 'SET_AUDIO',
-	// 						audio: audio
-	// 					});
+				let wasPlaying = playing;
+				soundDispatch({
+					type: 'SET_PLAYING',
+					playing: false,
+				});
 
-	// 					if(wasPlaying) {
-	// 						soundDispatch({
-	// 							type: 'SET_PLAYING',
-	// 							playing: true,
-	// 						});
-	// 					}
+				let audio = new Audio(randomTrack.preview_url);
+				audio.loop = repeat;
+				soundDispatch({
+					type: 'SET_AUDIO',
+					audio: audio
+				});
 
-	// 					document.title = `${randomTrack.name} · ${randomTrack.artists.map((artist) => artist.name).join(', ')}`
-	// 					break;
-	// 				}
-	// 			}
-	// 		} else if(!repeat) {
-	// 			soundDispatch({
-	// 				type: 'SET_PLAYING',
-	// 				playing: false,
-	// 			});
-	// 		}
-	// 	}
-	// }
+				if(wasPlaying) {
+					soundDispatch({
+						type: 'SET_PLAYING',
+						playing: true,
+					});
+				}
+
+				document.title = `${randomTrack.name} · ${randomTrack.artists.map((artist) => artist.name).join(', ')}`;
+			} else if(repeat) {
+				playPrevOrNextSong(trackInd); // playing the same song
+			}else{
+				playPrevOrNextSong(trackInd + 1);
+			}
+		}
+	}
 
 	return (
 		<div className="footer">
