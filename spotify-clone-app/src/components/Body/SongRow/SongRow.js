@@ -1,15 +1,16 @@
 import React from 'react';
-import './SongRow.css';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
 import {useDataLayerValue} from '../../../state/DataLayer';
 import {useSoundLayerValue} from '../../../state/SoundLayer';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import './SongRow.css';
 
 function SongRow({ trackItem, index }) {
-	const [{track, current_playlist, trackInd}, dispatch] = useDataLayerValue();
-	const [{playing, repeat}, soundDispatch] = useSoundLayerValue();
+	const [{ track, current_playlist, trackInd }, dispatch] = useDataLayerValue();
+	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
+
 	//TODO -refactor to a better solution
-	let setActive = (e) => {
+	const setActive = (e) => {
 		let elems = document.querySelectorAll(".songRow.active");
 		[].forEach.call(elems, function(el) {
 		  el.classList.remove("active");
@@ -41,7 +42,7 @@ function SongRow({ trackItem, index }) {
 			type: 'SET_PLAYING',
 			playing: false,
 		});
-		debugger;
+
 		let audio = new Audio(trackItem.preview_url);
 		audio.loop = repeat;
 		soundDispatch({
@@ -67,11 +68,11 @@ function SongRow({ trackItem, index }) {
 			<div className="songRow_inner">
 				<div className="songRow__index">
 					<span className="songRow__index__number">&nbsp;{index + 1}</span>
-					{
-						playing && current_playlist?.tracks?.items[index]?.track?.id == trackItem?.id && trackInd == index
-						? <span className="songRow__index__icon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
-						: <span className="songRow__index__icon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>
-					}
+					{playing && current_playlist?.tracks?.items[index]?.track?.id == trackItem?.id && trackInd == index ? (
+						 <span className="songRow__index__icon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
+					) : (
+						<span className="songRow__index__icon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>
+					)}
 				</div>
 				<img className="songRow__album" src={trackItem?.album?.images[0].url} alt=""/>
 				<div className="songRow__info">

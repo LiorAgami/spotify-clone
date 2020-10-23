@@ -1,14 +1,14 @@
 import React from 'react';
-import './Body.css';
-import PlaylistView from './PlaylistView/PlaylistView';
 import {useDataLayerValue} from '../../state/DataLayer';
+import PlaylistView from './PlaylistView/PlaylistView';
 import HomeView from './HomeView/HomeView';
 import LibraryView from './LibraryView/LibraryView';
+import './Body.css';
 
 function Body({ spotify }) {
-	const [{library_playlists, current_playlist}, dispatch] = useDataLayerValue();
+	const [{ library_playlists, current_playlist }, dispatch] = useDataLayerValue();
 
-	let renderComponent = () =>{
+	const renderComponent = () =>{
 		if(current_playlist?.tracks?.items?.length) return <PlaylistView spotify={spotify} />;
 		if(library_playlists?.items?.length) return <LibraryView spotify={spotify} />;
 

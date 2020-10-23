@@ -1,11 +1,11 @@
 import React from 'react';
+import { useDataLayerValue } from '../../../state/DataLayer';
 import PlaylistCard from './PlaylistCard/PlaylistCard';
 import './HomeView.css';
-import { useDataLayerValue } from '../../../state/DataLayer';
 
 function HomeView() {
 
-	const [{featured_playlists, recent_played_playlists}, dispatch] = useDataLayerValue();
+	const [{ featured_playlists, recent_played_playlists }, dispatch] = useDataLayerValue();
 
 	return (
 	<div>
@@ -21,8 +21,6 @@ function HomeView() {
 						key={playlist.id + String(Math.random())}
 					/>
 				))}
-
-
 			</div>
 		</section>
 		<section>
@@ -35,11 +33,8 @@ function HomeView() {
 						key={playlist.id + String(Math.random())}
 						trackId={playlist?.track?.id}
 						isTrack={true}
-
 					/>
 				))}
-
-
 			</div>
 		</section>
 	</div>

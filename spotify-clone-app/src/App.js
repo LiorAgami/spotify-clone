@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-import Login from './containers/Login/Login';
-import { getTokenFromUrl } from './spotify';
-import SpotifyWebApi from "spotify-web-api-js";
-import Player from "./containers/Player/Player";
 import {useDataLayerValue} from './state/DataLayer';
+import SpotifyWebApi from "spotify-web-api-js";
+import { getTokenFromUrl } from './spotify';
+import Login from './containers/Login/Login';
+import Player from "./containers/Player/Player";
+import './App.css';
+
 
 const spotify = new SpotifyWebApi();
 
 function App() {
-	const [{user, token}, dispatch] = useDataLayerValue();
+	const [{ token }, dispatch] = useDataLayerValue();
 
 	useEffect(() => {
 		const hash = getTokenFromUrl();
@@ -34,7 +35,7 @@ function App() {
 				})
 			});
 
-			spotify.getUserPlaylists().then((playlists) => {
+			spotify.getUserPlaylists({market:'IL'}).then((playlists) => {
 
 				dispatch({
 					type: 'SET_PLAYLISTS',
@@ -42,7 +43,7 @@ function App() {
 				})
 			});
 
-			spotify.getPlaylist('37i9dQZEVXcGT4LTcEgTYQ').then((discover_weekly) => {
+			spotify.getPlaylist('37i9dQZEVXcGT4LTcEgTYQ', {market:'IL'}).then((discover_weekly) => {
 
 				dispatch({
 					type: 'SET_DISCOVER_WEEKLY',
@@ -50,7 +51,7 @@ function App() {
 				})
 			});
 
-			spotify.getFeaturedPlaylists({limit:10}).then((featured_playlists) => {
+			spotify.getFeaturedPlaylists({limit:10, market:'IL'}).then((featured_playlists) => {
 
 				dispatch({
 					type: 'SET_FEATURED_PLAYLISTS',
@@ -58,7 +59,7 @@ function App() {
 				})
 			});
 
-			spotify.getMyRecentlyPlayedTracks({limit:10}).then((recent_played) => {
+			spotify.getMyRecentlyPlayedTracks({limit:10, market:'IL'}).then((recent_played) => {
 
 				dispatch({
 					type: 'SET_RECENT_PLAYED_PLAYLISTS',
@@ -70,13 +71,11 @@ function App() {
 
 	return (
 		<div className="app">
-			{
-				token ? (
-					<Player spotify={spotify}/>
-				) : (
-					<Login/>
-				)
-			}
+			{token ? (
+				<Player spotify={spotify}/>
+			) :(
+				 <Login/>
+			)}
 		</div>
 	);
 }

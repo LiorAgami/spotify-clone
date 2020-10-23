@@ -1,5 +1,6 @@
 import React from 'react';
-import './Footer.css';
+import {useDataLayerValue} from "../../state/DataLayer";
+import {useSoundLayerValue} from "../../state/SoundLayer";
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
@@ -9,13 +10,12 @@ import {Grid, Slider} from '@material-ui/core';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
-import {useDataLayerValue} from "../../state/DataLayer";
-import {useSoundLayerValue} from "../../state/SoundLayer";
+import './Footer.css';
 
 
 function Footer() {
-	const [{track, tracks, current_playlist, trackInd}, dispatch] = useDataLayerValue();
-	const [{audio, playing, volume, repeat, shuffle}, soundDispatch] = useSoundLayerValue();
+	const [{ track, tracks }, dispatch] = useDataLayerValue();
+	const [{ audio, playing, volume, repeat, shuffle }, soundDispatch] = useSoundLayerValue();
 
 	const startPlaying = () => {
 		soundDispatch({
@@ -63,7 +63,7 @@ function Footer() {
 		});
 	};
 
-	let playNextSong = () => {
+	const playNextSong = () => {
 		// if(!current_playlist?.tracks?.items[trackInd + 1]) return;
 
 		// dispatch({
@@ -98,6 +98,7 @@ function Footer() {
 				while(true) {
 					let randomTrackNumber = Math.floor((Math.random() * tracks.items.length));
 					let randomTrack = tracks.items[randomTrackNumber].track;
+
 					if(track !== randomTrack) {
 						dispatch({
 							type: 'SET_TRACK',
@@ -125,11 +126,10 @@ function Footer() {
 						}
 
 						document.title = `${randomTrack.name} · ${randomTrack.artists.map((artist) => artist.name).join(', ')}`
-						break
+						break;
 					}
 				}
-			}
-			if(!shuffle && !repeat) {
+			} else if(!repeat) {
 				soundDispatch({
 					type: 'SET_PLAYING',
 					playing: false,
@@ -141,7 +141,7 @@ function Footer() {
 	return (
 		<div className="footer">
 			<div className="footer__left">
-				{ track?.name &&
+				{ track?.name && (
 					<div className="footer__left_inner">
 						<img className="footer__albumLogo" src={track?.album?.images[0].url} alt="" />
 						<div className="footer_songInfo">
@@ -149,24 +149,36 @@ function Footer() {
 							<p>{track?.artists.map((artist) => artist.name).join(", ")}</p>
 						</div>
 					</div>
-				}
+				)}
 			</div>
 			<div className="footer__center">
-				<ShuffleIcon onClick={track ? setShuffle : null} className={shuffle ? 'footer__green' : 'footer__icon'}/>
+				<ShuffleIcon
+					onClick={track ? setShuffle : null}
+					className={shuffle ? 'footer__green' : 'footer__icon'}
+				/>
+
 				<SkipPreviousIcon className="footer__icon"/>
-				{
-				playing ?
+
+				{playing ? (
 					<PauseCircleOutlineIcon
 						onClick={track ? stopPlaying : null}
-						fontSize='large'
-						className='footer__icon'/> :
+						fontSize="large"
+						className="footer__icon"
+					/>
+				) : (
 					<PlayCircleOutlineIcon
 						onClick={track ? startPlaying : null}
-						fontSize='large'
-						className='footer__icon'/>
-				}
+						fontSize="large"
+						className="footer__icon"
+					/>
+				)}
+
 				<SkipNextIcon onClick={playNextSong} className="footer__icon"/>
-				<RepeatIcon  onClick={track? setRepeat : null} className={repeat ? 'footer__green' : 'footer__icon'}/>
+
+				<RepeatIcon
+					onClick={track? setRepeat : null}
+					className={repeat ? 'footer__green' : 'footer__icon'}
+				/>
 			</div>
 			<div className="footer__right">
 				<Grid container spacing={2}>

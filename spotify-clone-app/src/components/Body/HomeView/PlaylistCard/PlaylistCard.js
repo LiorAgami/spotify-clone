@@ -1,21 +1,21 @@
 import React from 'react';
-import './PlaylistCard.css';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SpotifyWebApi from "spotify-web-api-js";
 import {useDataLayerValue} from '../../../../state/DataLayer';
 import {useSoundLayerValue} from "../../../../state/SoundLayer";
 import { Subject } from 'rxjs'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import SpotifyWebApi from "spotify-web-api-js";
+import './PlaylistCard.css';
 
 const playlistWasUpdated = new Subject();
 
 const spotify = new SpotifyWebApi();
 
-function PlaylistCard(props) {
+function PlaylistCard( props ) {
 
-	const [{active_tab}, dispatch] = useDataLayerValue();
+	const [{}, dispatch] = useDataLayerValue();
 	const [{volume, repeat}, soundDispatch] = useSoundLayerValue();
 
-	function listenForPlaylistChange(){
+	const listenForPlaylistChange = () => {
 		dispatch({
 			type: 'SET_ACTIVE_TAB',
 			active_tab:''
@@ -26,7 +26,7 @@ function PlaylistCard(props) {
 		});
 	}
 
-	function startPlayingFirstSong(playlist){
+	const startPlayingFirstSong = (playlist) => {
 		soundDispatch({
 			type: 'SET_PLAYING',
 			playing: false,
@@ -40,6 +40,7 @@ function PlaylistCard(props) {
 
 		let audio = new Audio(playlist?.tracks?.items[0]?.track.preview_url);
 		audio.loop = repeat;
+
 		soundDispatch({
 			type: 'SET_AUDIO',
 			audio: audio
@@ -59,7 +60,7 @@ function PlaylistCard(props) {
 
 	}
 
-	function getTrackData(){
+	const getTrackData = () => {
 		dispatch({
 			type: 'SET_ACTIVE_TAB',
 			active_tab:''
@@ -68,7 +69,7 @@ function PlaylistCard(props) {
 		const track_id = props?.trackId || '';
 		if(!track_id) return;
 
-		return spotify.getTrack(track_id).then((playlist_items) => {
+		return spotify.getTrack(track_id, {market:'IL'}).then((playlist_items) => {
 			let adjusted_playlist = {
 				isTrack:true,
 				tracks:{
@@ -89,7 +90,7 @@ function PlaylistCard(props) {
 		});
 	}
 
-	function getPlaylistData(){
+	const getPlaylistData = () => {
 		dispatch({
 			type: 'SET_ACTIVE_TAB',
 			active_tab:''
@@ -98,7 +99,7 @@ function PlaylistCard(props) {
 		const playlist_id = props?.playlistId || '';
 		if(!playlist_id) return;
 
-		return spotify.getPlaylist(playlist_id).then((playlist_items) => {
+		return spotify.getPlaylist(playlist_id, {market:'IL'}).then((playlist_items) => {
 
 			dispatch({
 				type: 'SET_CURRENT_PLAYLIST',
@@ -108,8 +109,6 @@ function PlaylistCard(props) {
 		});
 	}
 
-
-
 	return (
 		<div className="cardsContainer__card" onClick={!props.isTrack ? getPlaylistData : getTrackData}>
 			<div className="cardRow">
@@ -117,7 +116,9 @@ function PlaylistCard(props) {
 					<div className="cardRow__card__inner">
 						<div className="cardRow__card__inner__imgContainer">
 							<img src={props.img}/>
-							<span className="cardRow__card__inner__imgContainer__playIcon" onClick={listenForPlaylistChange}><PlayArrowIcon/></span>
+							<span className="cardRow__card__inner__imgContainer__playIcon"
+								onClick={listenForPlaylistChange}><PlayArrowIcon/>
+							</span>
 						</div>
 						<div className="cardRow__card__inner__textContainer">
 						<a href="#">{props.title}</a>
