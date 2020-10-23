@@ -6,7 +6,7 @@ import PauseIcon from '@material-ui/icons/Pause';
 import './SongRow.css';
 
 function SongRow({ trackItem, index }) {
-	const [{ track, current_playlist, trackInd }, dispatch] = useDataLayerValue();
+	const [{ track, current_playing_playlist, current_displayed_playlist, trackInd }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	//TODO -refactor to a better solution
@@ -21,7 +21,7 @@ function SongRow({ trackItem, index }) {
 	}
 
 	const pauseTrack = () => {
-		if((current_playlist?.tracks?.items[index]?.track?.id == trackItem?.id)){
+		if((current_playing_playlist?.tracks?.items[index]?.track?.id == trackItem?.id)){
 			soundDispatch({
 				type: 'SET_PLAYING',
 				playing: false,
@@ -36,6 +36,11 @@ function SongRow({ trackItem, index }) {
 			type: 'SET_TRACK',
 			track: trackItem,
 			index:index
+		});
+
+		dispatch({
+			type: 'SET_CURRENT_PLAYING_PLAYLIST',
+			playlist_items:current_displayed_playlist
 		});
 
 		soundDispatch({
@@ -68,7 +73,7 @@ function SongRow({ trackItem, index }) {
 			<div className="songRow_inner">
 				<div className="songRow__index">
 					<span className="songRow__index__number">&nbsp;{index + 1}</span>
-					{playing && current_playlist?.tracks?.items[index]?.track?.id == trackItem?.id && trackInd == index ? (
+					{playing && track?.id == trackItem?.id && trackInd == index ? (
 						 <span className="songRow__index__icon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
 					) : (
 						<span className="songRow__index__icon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>

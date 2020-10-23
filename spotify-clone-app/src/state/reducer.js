@@ -4,7 +4,8 @@ export const initialState = {
 	featured_playlists: [],
 	recent_played_playlists: [],
 	library_playlists: [],
-	current_playlist: [],
+	current_displayed_playlist: [],
+	current_playing_playlist: [],
 	playing: false,
 	item: null,
 	tracks: null,
@@ -61,10 +62,15 @@ const reducer = (state, action) => {
 				...state,
 				recent_played_playlists:action.recent_played
 			};
-		case 'SET_CURRENT_PLAYLIST':
+		case 'SET_CURRENT_DISPLAYED_PLAYLIST':
 			return {
 				...state,
-				current_playlist:action.playlist_items
+				current_displayed_playlist:action.playlist_items
+			};
+		case 'SET_CURRENT_PLAYING_PLAYLIST':
+			return {
+				...state,
+				current_playing_playlist:action.playlist_items
 			};
 		case 'SET_TRACKS': {
 			return {

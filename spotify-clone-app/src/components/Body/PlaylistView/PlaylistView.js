@@ -3,35 +3,33 @@ import {useDataLayerValue} from '../../../state/DataLayer';
 import {useSoundLayerValue} from "../../../state/SoundLayer";
 import SongRow from '../SongRow/SongRow';
 import Header from '../Header/Header';
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-
+import './PlaylistView.css';
 
 
 function PlaylistView({ spotify }) {
-	const [{ index, track, playing, current_playlist }, dispatch] = useDataLayerValue();
-	const [{ repeat }, soundDispatch] = useSoundLayerValue();
+	const [{ trackInd, track, current_displayed_playlist }, dispatch] = useDataLayerValue();
+	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	const pauseTrack = () => {
-		if((current_playlist?.tracks?.items[index]?.track?.id == track?.id)){
-			soundDispatch({
-				type: 'SET_PLAYING',
-				playing: false,
-			});
+		if(!(current_displayed_playlist?.tracks?.items[trackInd]?.track?.id == track?.id)) return;
 
-			return;
-		}
+		soundDispatch({
+			type: 'SET_PLAYING',
+			playing: false,
+		});
 	}
 
 	const playTrack = () => {
-		let track = current_playlist?.tracks?.items[index]?.track;
+		if(!(current_displayed_playlist?.tracks?.items[trackInd]?.track)) return;
 
 		dispatch({
 			type: 'SET_TRACK',
 			track: track,
-			index:index
+			index:trackInd
 		});
 
 		soundDispatch({
@@ -57,28 +55,33 @@ function PlaylistView({ spotify }) {
 	return (
 		<div>
 			<Header spotify={spotify} />
-			<div className="body__info">
-				<img src={current_playlist?.images[0]?.url} alt=""/>
-				<div className="body__infoText">
-					<strong>{!current_playlist?.isTrack ? 'PLAYLIST' : 'TRACK'}</strong>
-					<h1>{current_playlist?.name}</h1>
-					<p>{current_playlist?.description}</p>
+			<div className="playlistView__info">
+				<img src={current_displayed_playlist?.images[0]?.url} alt=""/>
+				<div className="playlistView__infoText">
+					<strong>{!current_displayed_playlist?.isTrack ? 'PLAYLIST' : 'TRACK'}</strong>
+					<h1>{current_displayed_playlist?.name}</h1>
+					<p>{current_displayed_playlist?.description}</p>
 				</div>
 			</div>
 
-			<div className="body__songs">
-				<div className="body__icons">
+			<div className="playlistView__songs">
+				<div className="playlistView__icons">
 					{ !playing ? (
-						<PlayCircleFilledIcon  onClick={playTrack} className="body__shuffle green" />
+						<div className="playlistView__playIconCont">
+							<PlayArrowIcon  onClick={playTrack} className="playlistView__playIcon" />
+						</div>
+						
 					) : (
-						<PauseIcon  onClick={pauseTrack} className="body__shuffle green" />
+						<div className="playlistView__stopIconCont">
+							<PauseIcon  onClick={pauseTrack} className="playlistView__stopIcon" />
+						</div>
 					)}
 
 					<FavoriteIcon fontSize="large" />
 					<MoreHorizIcon />
 				</div>
 
-				{current_playlist?.tracks?.items.map((item, ind) => (
+				{current_displayed_playlist?.tracks?.items.map((item, ind) => (
 					<SongRow
 						key={item.id + String(ind)}
 						index={ind} trackItem={item?.track}

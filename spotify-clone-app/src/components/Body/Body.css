@@ -28,60 +28,10 @@
 	outline: 1px solid #A5A5A5;
 }
 
-.body__info{
-	display:flex;
-	align-items:flex-end;
-	padding:10px;
-	flex:1;
-}
-.body__info > img{
-	height:20vw;
-	max-height:232px;
-	max-width:232px;
-	margin:0 20px;
-	box-shadow: 0 4px 60px rgba(0,0,0,1);
-}
 
-.body__infoText > h1{
-	font-size:80px;
-	margin-bottom:10px;
-}
-
-.body__infoText > p{
-	font-size:14px;
-}
-
-.body__icons{
-	display:flex;
-	align-items:center;
-}
-
-.body__icons > .MuiSvgIcon-root{
-	margin-right:20px;
-}
-
-.body__icons > .body__shuffle{
-	position:relative;
-	font-size:80px !important;
-	margin-left:50px;
-	margin-top:20px;
-	margin-bottom:20px;
-}
-.body__icons > .body__shuffle::before{
-	content:"";
-	position: absolute;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
-	background-color: white;
-}
 
 .body__shuffle:hover{
 	transition: 100ms transform ease-in;
 	transform: scale(1.08);
 }
 
-.body__songs{
-	margin:20px -30px;
-}

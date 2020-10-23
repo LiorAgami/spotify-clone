@@ -27,6 +27,12 @@ function PlaylistCard( props ) {
 	}
 
 	const startPlayingFirstSong = (playlist) => {
+
+		dispatch({
+			type: 'SET_CURRENT_PLAYING_PLAYLIST',
+			playlist_items:playlist
+		});
+
 		soundDispatch({
 			type: 'SET_PLAYING',
 			playing: false,
@@ -53,7 +59,7 @@ function PlaylistCard( props ) {
 
 		soundDispatch({
 			type: "SET_VOLUME",
-			volume: volume / 100
+			volume: volume
 		});
 
 		playlistWasUpdated.unsubscribe();
@@ -82,7 +88,12 @@ function PlaylistCard( props ) {
 			};
 
 			dispatch({
-				type: 'SET_CURRENT_PLAYLIST',
+				type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
+				playlist_items:adjusted_playlist
+			});
+
+			dispatch({
+				type: 'SET_CURRENT_PLAYING_PLAYLIST',
 				playlist_items:adjusted_playlist
 			});
 
@@ -102,7 +113,7 @@ function PlaylistCard( props ) {
 		return spotify.getPlaylist(playlist_id, {market:'IL'}).then((playlist_items) => {
 
 			dispatch({
-				type: 'SET_CURRENT_PLAYLIST',
+				type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
 				playlist_items
 			})
 			playlistWasUpdated.next(playlist_items);

@@ -14,10 +14,10 @@ import './Footer.css';
 
 
 function Footer() {
-	const [{ track, tracks }, dispatch] = useDataLayerValue();
+	const [{ current_playing_playlist, current_displayed_playlist, track, trackInd, tracks }, dispatch] = useDataLayerValue();
 	const [{ audio, playing, volume, repeat, shuffle }, soundDispatch] = useSoundLayerValue();
 
-	const startPlaying = () => {
+	const startPlaying = (e) => {
 		soundDispatch({
 			type: "SET_PLAYING",
 			playing: true
@@ -29,7 +29,7 @@ function Footer() {
 		// });
 	};
 
-	const stopPlaying = () => {
+	const stopPlaying = (e) => {
 		soundDispatch({
 			type: "SET_PLAYING",
 			playing: false
@@ -63,80 +63,86 @@ function Footer() {
 		});
 	};
 
-	const playNextSong = () => {
-		// if(!current_playlist?.tracks?.items[trackInd + 1]) return;
+	const playPrevOrNextSong = (songIndex) => {debugger;
+		if(!current_playing_playlist?.tracks?.items[songIndex]?.track) return;
 
-		// dispatch({
-		// 	type: 'SET_TRACK',
-		// 	track: current_playlist.tracks.items[trackInd + 1],
-		// 	index:trackInd + 1
-		// });
+		dispatch({
+			type: 'SET_TRACK',
+			track: (current_playing_playlist.tracks.items[songIndex].track),
+			index: songIndex
+		});
 
-		// let audio = new Audio(current_playlist.tracks.items[trackInd + 1].preview_url);
+		soundDispatch({
+			type: 'SET_PLAYING',
+			playing: false,
+		});
 
-		// audio.loop = repeat;
-		// soundDispatch({
-		// 	type: 'SET_AUDIO',
-		// 	audio: audio
-		// });
+		let audio = new Audio(current_playing_playlist.tracks.items[songIndex].track?.preview_url);
+		audio.loop = repeat;
 
-		// soundDispatch({
-		// 	type: 'SET_PLAYING',
-		// 	playing: true,
-		// });
+		soundDispatch({
+			type: 'SET_AUDIO',
+			audio: audio
+		});
 
-		// soundDispatch({
-		// 	type: "SET_VOLUME",
-		// 	volume: volume / 100
-		// });
+		soundDispatch({
+			type: 'SET_PLAYING',
+			playing: true,
+		});
+
+		soundDispatch({
+			type: "SET_VOLUME",
+			volume: volume
+		});
 
 	}
 
-	if(audio) {
-		audio.onended = () => {
-			if(shuffle) {
-				while(true) {
-					let randomTrackNumber = Math.floor((Math.random() * tracks.items.length));
-					let randomTrack = tracks.items[randomTrackNumber].track;
 
-					if(track !== randomTrack) {
-						dispatch({
-							type: 'SET_TRACK',
-							track: randomTrack
-						});
+	// if(audio) {
+	// 	audio.onended = () => {
+	// 		if(shuffle) {
+	// 			while(true) {
+	// 				let randomTrackNumber = Math.floor((Math.random() * tracks.items.length));
+	// 				let randomTrack = tracks.items[randomTrackNumber].track;
 
-						let wasPlaying = playing;
-						soundDispatch({
-							type: 'SET_PLAYING',
-							playing: false,
-						});
+	// 				if(track !== randomTrack) {
+	// 					dispatch({
+	// 						type: 'SET_TRACK',
+	// 						track: randomTrack
+	// 					});
 
-						let audio = new Audio(randomTrack.preview_url);
-						audio.loop = repeat;
-						soundDispatch({
-							type: 'SET_AUDIO',
-							audio: audio
-						});
+	// 					let wasPlaying = playing;
+	// 					soundDispatch({
+	// 						type: 'SET_PLAYING',
+	// 						playing: false,
+	// 					});
 
-						if(wasPlaying) {
-							soundDispatch({
-								type: 'SET_PLAYING',
-								playing: true,
-							});
-						}
+	// 					let audio = new Audio(randomTrack.preview_url);
+	// 					audio.loop = repeat;
+	// 					soundDispatch({
+	// 						type: 'SET_AUDIO',
+	// 						audio: audio
+	// 					});
 
-						document.title = `${randomTrack.name} · ${randomTrack.artists.map((artist) => artist.name).join(', ')}`
-						break;
-					}
-				}
-			} else if(!repeat) {
-				soundDispatch({
-					type: 'SET_PLAYING',
-					playing: false,
-				});
-			}
-		}
-	}
+	// 					if(wasPlaying) {
+	// 						soundDispatch({
+	// 							type: 'SET_PLAYING',
+	// 							playing: true,
+	// 						});
+	// 					}
+
+	// 					document.title = `${randomTrack.name} · ${randomTrack.artists.map((artist) => artist.name).join(', ')}`
+	// 					break;
+	// 				}
+	// 			}
+	// 		} else if(!repeat) {
+	// 			soundDispatch({
+	// 				type: 'SET_PLAYING',
+	// 				playing: false,
+	// 			});
+	// 		}
+	// 	}
+	// }
 
 	return (
 		<div className="footer">
@@ -157,23 +163,23 @@ function Footer() {
 					className={shuffle ? 'footer__green' : 'footer__icon'}
 				/>
 
-				<SkipPreviousIcon className="footer__icon"/>
+				<SkipPreviousIcon onClick={(e) => playPrevOrNextSong((trackInd - 1))}  className="footer__icon"/>
 
 				{playing ? (
 					<PauseCircleOutlineIcon
-						onClick={track ? stopPlaying : null}
+						onClick={(e) => {stopPlaying(e)}}
 						fontSize="large"
 						className="footer__icon"
 					/>
 				) : (
 					<PlayCircleOutlineIcon
-						onClick={track ? startPlaying : null}
+						onClick={(e) => {startPlaying(e)}}
 						fontSize="large"
 						className="footer__icon"
 					/>
 				)}
 
-				<SkipNextIcon onClick={playNextSong} className="footer__icon"/>
+				<SkipNextIcon onClick={(e) => playPrevOrNextSong((trackInd + 1))} className="footer__icon"/>
 
 				<RepeatIcon
 					onClick={track? setRepeat : null}

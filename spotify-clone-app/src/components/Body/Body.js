@@ -6,10 +6,10 @@ import LibraryView from './LibraryView/LibraryView';
 import './Body.css';
 
 function Body({ spotify }) {
-	const [{ library_playlists, current_playlist }, dispatch] = useDataLayerValue();
+	const [{ library_playlists, current_displayed_playlist }, dispatch] = useDataLayerValue();
 
 	const renderComponent = () =>{
-		if(current_playlist?.tracks?.items?.length) return <PlaylistView spotify={spotify} />;
+		if(current_displayed_playlist?.tracks?.items?.length) return <PlaylistView spotify={spotify} />;
 		if(library_playlists?.items?.length) return <LibraryView spotify={spotify} />;
 
 		return <HomeView />;

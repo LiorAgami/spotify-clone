@@ -24,7 +24,7 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 
 		spotify.getPlaylist(playlistId, {market:'IL'}).then((playlist_items) => {
 			dispatch({
-				type: 'SET_CURRENT_PLAYLIST',
+				type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
 				playlist_items
 			})
 
@@ -38,7 +38,7 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 	// const  goToLibrary = () => {
 	// 	spotify.getUserPlaylists().then((library_playlists) => {
 	// 		dispatch({
-	// 			type:'SET_CURRENT_PLAYLIST',
+	// 			type:'SET_CURRENT_DISPLAYED_PLAYLIST',
 	// 			playlist_items:[]
 	// 		})
 
@@ -56,7 +56,7 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 
 	const goBackToHome = () => {
 		dispatch({
-			type:'SET_CURRENT_PLAYLIST',
+			type:'SET_CURRENT_DISPLAYED_PLAYLIST',
 			playlist_items:[]
 		})
 

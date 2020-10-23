@@ -1,0 +1,73 @@
+
+.playlistView__info {
+	display:flex;
+	align-items:flex-end;
+	padding:10px;
+	flex:1;
+}
+.playlistView__info > img {
+	height:20vw;
+	max-height:232px;
+	max-width:232px;
+	margin:0 20px;
+	box-shadow: 0 4px 60px rgba(0,0,0,1);
+}
+
+.playlistView__songs {
+	margin:20px -30px;
+}
+
+.playlistView__icons {
+	display:flex;
+	align-items:center;
+}
+
+.playlistView__icons > .MuiSvgIcon-root {
+	margin-right:20px;
+}
+
+.playlistView__icons > .playlistView__shuffle {
+	position:relative;
+	font-size:40px !important;
+	margin-left:50px;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+
+.playlistView__infoText > h1 {
+	font-size:80px;
+	margin-bottom:10px;
+}
+
+.playlistView__infoText > p {
+	font-size:14px;
+}
+
+.playlistView__stopIconCont, .playlistView__playIconCont {
+	background: white;
+	border-radius: 70px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 50px;
+	margin-right: 40px;
+	width: 64px;
+	height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color:#1DB954;
+
+}
+
+.playlistView__stopIconCont:hover, .playlistView__playIconCont:hover {
+	transition: 100ms transform ease-in;
+	transform: scale(1.08);
+}
+
+.playlistView__stopIcon, .playlistView__playIcon {
+	color:white;
+	position:relative;
+	font-size:40px !important;
+}
+
