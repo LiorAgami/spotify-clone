@@ -11,11 +11,11 @@ import './PlaylistView.css';
 
 
 function PlaylistView({ spotify }) {
-	const [{ trackInd, track, current_displayed_playlist }, dispatch] = useDataLayerValue();
+	const [{ track_index, track, current_displayed_playlist }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	const pauseTrack = () => {
-		if(!(current_displayed_playlist?.tracks?.items[trackInd]?.track?.id == track?.id)) return;
+		if(!(current_displayed_playlist?.tracks?.items[track_index]?.track?.id == track?.id)) return;
 
 		soundDispatch({
 			type: 'SET_PLAYING',
@@ -24,12 +24,12 @@ function PlaylistView({ spotify }) {
 	}
 
 	const playTrack = () => {
-		if(!(current_displayed_playlist?.tracks?.items[trackInd]?.track)) return;
+		if(!(current_displayed_playlist?.tracks?.items[track_index]?.track)) return;
 
 		dispatch({
 			type: 'SET_TRACK',
 			track: track,
-			index:trackInd
+			index:track_index
 		});
 
 		soundDispatch({

@@ -30,20 +30,20 @@
 	font-size:16px;
 }
 
-.songRow:hover .songRow__index__number{
+.songRow:hover .songRow__indexNumber{
 	display:none;
 }
 
-.songRow:hover .songRow__index__icon{
+.songRow:hover .songRow__indexIcon{
 	display: flex;
 	justify-content: center;
 }
 
-.songRow__index__number{
+.songRow__indexNumber{
 	display:block;
 }
 
-.songRow__index__icon{
+.songRow__indexIcon{
 	display:none;
 }
 

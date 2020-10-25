@@ -18,7 +18,7 @@ import './Footer.css';
 
 
 function Footer() {
-	const [{ current_playing_playlist, track, trackInd }, dispatch] = useDataLayerValue();
+	const [{ current_playing_playlist, track, track_index }, dispatch] = useDataLayerValue();
 	const [{ audio, playing, volume, repeat, shuffle }, soundDispatch] = useSoundLayerValue();
 
 	const startPlaying = (e) => {
@@ -103,15 +103,15 @@ function Footer() {
 		audio.onended = () => {
 			if(shuffle) {
 
-				let randomTrackInd = Math.floor((Math.random() * current_playing_playlist?.tracks?.items?.length));
-				let randomTrack =current_playing_playlist?.tracks?.items[randomTrackInd]?.track;
+				let randomtrack_index = Math.floor((Math.random() * current_playing_playlist?.tracks?.items?.length));
+				let randomTrack = current_playing_playlist?.tracks?.items[randomtrack_index]?.track;
 
 				if(track === randomTrack) return;
 
 				dispatch({
 					type: 'SET_TRACK',
 					track: randomTrack,
-					index:randomTrackInd
+					index:randomtrack_index
 				});
 
 				let wasPlaying = playing;
@@ -136,9 +136,9 @@ function Footer() {
 
 				document.title = `${randomTrack.name} · ${randomTrack.artists.map((artist) => artist.name).join(', ')}`;
 			} else if(repeat) {
-				playPrevOrNextSong(trackInd); // playing the same song
+				playPrevOrNextSong(track_index); // playing the same song
 			}else{
-				playPrevOrNextSong(trackInd + 1);
+				playPrevOrNextSong(track_index + 1);
 			}
 		}
 	}
@@ -147,7 +147,7 @@ function Footer() {
 		<div className="footer">
 			<div className="footer__left">
 				{ track?.name && (
-					<div className="footer__left_inner">
+					<div className="footer__leftInner">
 						<img className="footer__albumLogo" src={track?.album?.images[0].url} alt="" />
 						<div className="footer_songInfo">
 							<h4>{track?.name || 'No song selected'}</h4>
@@ -162,7 +162,7 @@ function Footer() {
 					className={shuffle ? 'footer__green' : 'footer__icon'}
 				/>
 
-				<SkipPreviousIcon onClick={(e) => playPrevOrNextSong((trackInd - 1))}  className="footer__icon"/>
+				<SkipPreviousIcon onClick={(e) => playPrevOrNextSong((track_index - 1))}  className="footer__icon"/>
 
 				{playing ? (
 					<PauseCircleOutlineIcon
@@ -178,7 +178,7 @@ function Footer() {
 					/>
 				)}
 
-				<SkipNextIcon onClick={(e) => playPrevOrNextSong((trackInd + 1))} className="footer__icon"/>
+				<SkipNextIcon onClick={(e) => playPrevOrNextSong((track_index + 1))} className="footer__icon"/>
 
 				<RepeatIcon
 					onClick={track? setRepeat : null}

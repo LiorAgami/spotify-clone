@@ -6,7 +6,7 @@ import PauseIcon from '@material-ui/icons/Pause';
 import './SongRow.css';
 
 function SongRow({ trackItem, index }) {
-	const [{ track, current_playing_playlist, current_displayed_playlist, trackInd }, dispatch] = useDataLayerValue();
+	const [{ track, current_playing_playlist, current_displayed_playlist, track_index }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	//TODO -refactor to a better solution
@@ -72,16 +72,16 @@ function SongRow({ trackItem, index }) {
 		<div className="songRow" onClick={(e) => setActive(e)}>
 			<div className="songRow_inner">
 				<div className="songRow__index">
-					<span className="songRow__index__number">&nbsp;{index + 1}</span>
-					{playing && track?.id == trackItem?.id && trackInd == index ? (
-						 <span className="songRow__index__icon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
+					<span className="songRow__indexNumber">&nbsp;{index + 1}</span>
+					{playing && track?.id == trackItem?.id && track_index == index ? (
+						 <span className="songRow__indexIcon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
 					) : (
-						<span className="songRow__index__icon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>
+						<span className="songRow__indexIcon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>
 					)}
 				</div>
 				<img className="songRow__album" src={trackItem?.album?.images[0].url} alt=""/>
 				<div className="songRow__info">
-					<h1 className={trackInd == index && track?.id == trackItem?.id ? 'green' : ''}>{trackItem?.name}</h1>
+					<h1 className={track_index == index && track?.id == trackItem?.id ? 'green' : ''}>{trackItem?.name}</h1>
 					<p>
 						{trackItem?.artists?.map((artist) => artist?.name).join(", ")}
 						{trackItem?.album?.name}

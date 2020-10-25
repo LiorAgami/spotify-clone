@@ -14,8 +14,8 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 
 	const navigateClient = () => {
 		if(title == 'Home') return goBackToHome();
-		if(playlistId) return getPlaylistData();
-		// if(title == 'Your Library') return goToLibrary();
+		else if(playlistId) return getPlaylistData();
+		else if(title == 'Your Library') return goToLibrary();
 	}
 
 	const getPlaylistData = () => {
@@ -35,24 +35,24 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 		});
 	}
 
-	// const  goToLibrary = () => {
-	// 	spotify.getUserPlaylists().then((library_playlists) => {
-	// 		dispatch({
-	// 			type:'SET_CURRENT_DISPLAYED_PLAYLIST',
-	// 			playlist_items:[]
-	// 		})
+	const  goToLibrary = () => {
+		spotify.getUserPlaylists().then((library_playlists) => {
+			dispatch({
+				type:'SET_CURRENT_DISPLAYED_PLAYLIST',
+				playlist_items:[]
+			})
 
-	// 		dispatch({
-	// 			type:'SET_LIBRARY_PLAYLIST',
-	// 			library_playlists:library_playlists
-	// 		})
+			dispatch({
+				type:'SET_LIBRARY_PLAYLIST',
+				library_playlists:library_playlists
+			})
 
-	// 		dispatch({
-	// 			type: 'SET_ACTIVE_TAB',
-	// 			active_tab:'Your Library'
-	// 		})
-	// 	});
-	// }
+			dispatch({
+				type: 'SET_ACTIVE_TAB',
+				active_tab:'Your Library'
+			})
+		});
+	}
 
 	const goBackToHome = () => {
 		dispatch({

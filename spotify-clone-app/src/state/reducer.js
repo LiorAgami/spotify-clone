@@ -11,7 +11,7 @@ export const initialState = {
 	item: null,
 	tracks: null,
 	track: null,
-	trackInd: null,
+	track_index: null,
 	active_tab:'Home',
 };
 
@@ -89,7 +89,7 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				track: action.track,
-				trackInd:action.index
+				track_index:action.index
 			};
 		}
 		default:

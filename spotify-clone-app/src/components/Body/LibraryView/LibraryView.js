@@ -11,7 +11,7 @@ function HomeView() {
 			<section>
 				<h2 className="sectionTitle">PLAYLISTS</h2>
 				<div className="cardsContainer">
-					{library_playlists?.items.map((playlist, ind) =>(
+					{library_playlists?.items?.map((playlist, ind) =>(
 						<PlaylistCard
 							playlistId={playlist.id}
 							img={playlist?.images[0]?.url}
