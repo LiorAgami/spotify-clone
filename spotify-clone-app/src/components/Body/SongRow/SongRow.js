@@ -3,6 +3,7 @@ import {useDataLayerValue} from '../../../state/DataLayer';
 import {useSoundLayerValue} from '../../../state/SoundLayer';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
+import Equalizer from './Equalizer/Equalizer';
 import './SongRow.css';
 
 function SongRow({ trackItem, index }) {
@@ -69,12 +70,15 @@ function SongRow({ trackItem, index }) {
 	// }
 
 	return (
-		<div className="songRow" onClick={(e) => setActive(e)}>
+		<div className={ playing && track?.id == trackItem?.id && track_index == index ? 'songRow equalizerPlaying' : 'songRow'} onClick={(e) => setActive(e)}>
 			<div className="songRow_inner">
 				<div className="songRow__index">
 					<span className="songRow__indexNumber">&nbsp;{index + 1}</span>
 					{playing && track?.id == trackItem?.id && track_index == index ? (
-						 <span className="songRow__indexIcon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
+						<div>
+							<Equalizer className="songRow__equalizer" />
+							<span className="songRow__indexIcon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
+						 </div>
 					) : (
 						<span className="songRow__indexIcon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>
 					)}
