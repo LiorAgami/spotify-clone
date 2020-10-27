@@ -44,7 +44,7 @@ function App() {
 			})
 
 			spotify.getMyTopArtists().then((top_artists) => {
-				debugger;
+
 				dispatch({
 					type: 'SET_TOP_ARTISTS',
 					top_artists

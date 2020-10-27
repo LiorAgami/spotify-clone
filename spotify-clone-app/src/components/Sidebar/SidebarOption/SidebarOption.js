@@ -1,12 +1,15 @@
 import React from 'react';
 import {useDataLayerValue} from '../../../state/DataLayer';
+import {useSoundLayerValue} from '../../../state/SoundLayer';
 import SpotifyWebApi from 'spotify-web-api-js';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import './SidebarOption.css';
 
 const spotify = new SpotifyWebApi();
 
 function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
-	const [{ active_tab }, dispatch] = useDataLayerValue();
+	const [{ active_tab, current_playing_playlist }, dispatch] = useDataLayerValue();
+	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	let classNames = (title == active_tab ? 'active sidebarOption' : 'sidebarOption');
 
@@ -72,6 +75,9 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 				<span>
 					<Icon className="sidebarOption__icon" />
 					<h4>{title}</h4>
+					{playing && playlistId == current_playing_playlist.id ? (
+						<VolumeUpIcon />
+					) : ''}
 				</span>
 			) : (
 				<p>{title}</p>

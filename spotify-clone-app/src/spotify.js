@@ -1,6 +1,7 @@
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
-const redirectUri = "http://localhost:3000/";
+// const redirectUri = "http://localhost:3000/";
+const redirectUri = "http://lior-dev.com/spotify-clone";
 const clientid = "a3636aafd5c54643bab2040f851225e0";
 
 const scopes = [
