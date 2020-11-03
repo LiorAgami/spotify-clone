@@ -11,14 +11,19 @@
 }
 
 .sidebarOption.active{
-	color:white;
 	background-color: #282828;
 	border-radius: 4px;
+}
+.sidebarOption.active h4{
+	color:white;
 }
 
 .sidebarOption.isPlaylist.active{
 	background-color: unset;
 	border-radius: unset;
+}
+.sidebarOption.isPlaylist.active p{
+	color:white;
 }
 
 .sidebar > hr{

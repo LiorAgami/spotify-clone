@@ -11,7 +11,7 @@ function SidebarOption({ page, title, Icon, playlistId, isPlaylist }) {
 	const [{ active_page, current_playing_playlist }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
-	let classNames = (page == active_page ? 'active sidebarOption' : 'sidebarOption');
+	let classNames = (page == active_page && !playlistId ? 'active sidebarOption' : 'sidebarOption');
 
 	if(isPlaylist) classNames =  `${classNames} isPlaylist`;
 
