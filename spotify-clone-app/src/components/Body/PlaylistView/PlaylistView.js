@@ -2,7 +2,6 @@ import React from 'react';
 import {useDataLayerValue} from '../../../state/DataLayer';
 import {useSoundLayerValue} from "../../../state/SoundLayer";
 import SongRow from '../SongRow/SongRow';
-import Header from '../Header/Header';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -54,7 +53,6 @@ function PlaylistView({ spotify }) {
 
 	return (
 		<div>
-			<Header spotify={spotify} />
 			<div className="playlistView__info">
 				<img src={current_displayed_playlist?.images[0]?.url} alt=""/>
 				<div className="playlistView__infoText">
@@ -70,7 +68,6 @@ function PlaylistView({ spotify }) {
 						<div className="playlistView__playIconCont">
 							<PlayArrowIcon  onClick={playTrack} className="playlistView__playIcon" />
 						</div>
-						
 					) : (
 						<div className="playlistView__stopIconCont">
 							<PauseIcon  onClick={pauseTrack} className="playlistView__stopIcon" />

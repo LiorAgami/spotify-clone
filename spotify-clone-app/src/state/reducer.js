@@ -12,7 +12,7 @@ export const initialState = {
 	tracks: null,
 	track: null,
 	track_index: null,
-	active_tab:'Home',
+	active_page:'Home',
 };
 
 const reducer = (state, action) => {
@@ -23,10 +23,10 @@ const reducer = (state, action) => {
 				...state,
 				user:action.user
 			};
-		case 'SET_ACTIVE_TAB':
+		case 'SET_ACTIVE_PAGE':
 			return {
 				...state,
-				active_tab:action.active_tab
+				active_page:action.active_page
 			};
 		case 'SET_TOKEN':
 			return {
@@ -62,6 +62,11 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				recent_played_playlists:action.recent_played
+			};
+		case 'SET_CATEGORIES':
+			return {
+				...state,
+				categories:action.categories
 			};
 		case 'SET_CURRENT_DISPLAYED_PLAYLIST':
 			return {

@@ -7,18 +7,19 @@ import './SidebarOption.css';
 
 const spotify = new SpotifyWebApi();
 
-function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
-	const [{ active_tab, current_playing_playlist }, dispatch] = useDataLayerValue();
+function SidebarOption({ page, title, Icon, playlistId, isPlaylist }) {
+	const [{ active_page, current_playing_playlist }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
-	let classNames = (title == active_tab ? 'active sidebarOption' : 'sidebarOption');
+	let classNames = (page == active_page ? 'active sidebarOption' : 'sidebarOption');
 
 	if(isPlaylist) classNames =  `${classNames} isPlaylist`;
 
 	const navigateClient = () => {
-		if(title == 'Home') return goBackToHome();
-		else if(playlistId) return getPlaylistData();
-		else if(title == 'Your Library') return goToLibrary();
+		if(page == 'Home') return goBackToHome();
+		else if(page == 'Playlist') return getPlaylistData();
+		else if(page == 'Library') return goToLibrary();
+		else if(page == 'Search') return goToSearch();
 	}
 
 	const getPlaylistData = () => {
@@ -32,8 +33,8 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 			})
 
 			dispatch({
-				type: 'SET_ACTIVE_TAB',
-				active_tab:(playlist_items?.name || '')
+				type: 'SET_ACTIVE_PAGE',
+				active_page: 'Playlist'
 			})
 		});
 	}
@@ -41,31 +42,28 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 	const  goToLibrary = () => {
 		spotify.getUserPlaylists().then((library_playlists) => {
 			dispatch({
-				type:'SET_CURRENT_DISPLAYED_PLAYLIST',
-				playlist_items:[]
-			})
-
-			dispatch({
 				type:'SET_LIBRARY_PLAYLIST',
 				library_playlists:library_playlists
 			})
 
 			dispatch({
-				type: 'SET_ACTIVE_TAB',
-				active_tab:'Your Library'
+				type: 'SET_ACTIVE_PAGE',
+				active_page:'Library'
 			})
 		});
 	}
 
 	const goBackToHome = () => {
 		dispatch({
-			type:'SET_CURRENT_DISPLAYED_PLAYLIST',
-			playlist_items:[]
+			type: 'SET_ACTIVE_PAGE',
+			active_page:'Home'
 		})
+	}
 
+	const goToSearch = () => {
 		dispatch({
-			type: 'SET_ACTIVE_TAB',
-			active_tab:'Home'
+			type: 'SET_ACTIVE_PAGE',
+			active_page:'Search'
 		})
 	}
 
@@ -75,7 +73,7 @@ function SidebarOption({ title, Icon, playlistId, isPlaylist }) {
 				<span>
 					<Icon className="sidebarOption__icon" />
 					<h4>{title}</h4>
-					{playing && playlistId == current_playing_playlist.id ? (
+					{playing && isPlaylist && playlistId == current_playing_playlist.id ? (
 						<VolumeUpIcon />
 					) : ''}
 				</span>

@@ -74,6 +74,23 @@ function App() {
 					recent_played
 				})
 			});
+
+			spotify.getUserPlaylists().then((library_playlists) => {
+
+				dispatch({
+					type:'SET_LIBRARY_PLAYLIST',
+					library_playlists
+				})
+			});
+
+			spotify.getCategories().then((categories) => {
+
+				dispatch({
+					type: 'SET_CATEGORIES',
+					categories
+				})
+			});
+			
 		}
 	}, []);
 

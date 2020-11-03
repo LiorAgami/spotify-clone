@@ -16,10 +16,10 @@ function PlaylistCard( props ) {
 	const [{volume, repeat}, soundDispatch] = useSoundLayerValue();
 
 	const listenForPlaylistChange = () => {
-		dispatch({
-			type: 'SET_ACTIVE_TAB',
-			active_tab:''
-		})
+		// dispatch({
+		// 	type: 'SET_ACTIVE_PAGE',
+		// 	active_page:''
+		// })
 
 		playlistWasUpdated.subscribe(playlist =>{
 			startPlayingFirstSong(playlist);
@@ -28,6 +28,11 @@ function PlaylistCard( props ) {
 
 	const startPlayingFirstSong = (playlist) => {
 		let track = playlist?.tracks?.items[0]?.track;
+
+		dispatch({
+			type: 'SET_ACTIVE_PAGE',
+			active_page:'Playlist'
+		});
 
 		dispatch({
 			type: 'SET_CURRENT_PLAYING_PLAYLIST',
@@ -68,10 +73,6 @@ function PlaylistCard( props ) {
 	}
 
 	const getTrackData = () => {
-		dispatch({
-			type: 'SET_ACTIVE_TAB',
-			active_tab:''
-		})
 
 		const track_id = props?.trackId || '';
 		if(!track_id) return;
@@ -89,6 +90,11 @@ function PlaylistCard( props ) {
 			};
 
 			dispatch({
+				type: 'SET_ACTIVE_PAGE',
+				active_page:'Playlist'
+			})
+
+			dispatch({
 				type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
 				playlist_items:adjusted_playlist
 			});
@@ -103,11 +109,8 @@ function PlaylistCard( props ) {
 	}
 
 	const getPlaylistData = () => {
-		dispatch({
-			type: 'SET_ACTIVE_TAB',
-			active_tab:''
-		})
 
+		
 		const playlist_id = props?.playlistId || '';
 		if(!playlist_id) return;
 
@@ -116,23 +119,29 @@ function PlaylistCard( props ) {
 			dispatch({
 				type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
 				playlist_items
-			})
+			});
+
+			dispatch({
+				type: 'SET_ACTIVE_PAGE',
+				active_page:'Playlist'
+			});
+
 			playlistWasUpdated.next(playlist_items);
 		});
 	}
 
 	return (
-		<div className="cardsContainer__card" onClick={!props.isTrack ? getPlaylistData : getTrackData}>
-			<div className="cardRow">
-				<div className="cardRow__card">
-					<div className="cardRow__card__inner">
-						<div className="cardRow__card__inner__imgContainer">
+		<div className="playlistCard" onClick={!props.isTrack ? getPlaylistData : getTrackData}>
+			<div className="playlistCard__Row">
+				<div className="playlistCard__card">
+					<div className="playlistCard__cardInner">
+						<div className="playlistCard__imgCont">
 							<img src={props.img}/>
-							<span className="cardRow__card__inner__imgContainer__playIcon"
+							<span className="playlistCard__playIcon"
 								onClick={listenForPlaylistChange}><PlayArrowIcon/>
 							</span>
 						</div>
-						<div className="cardRow__card__inner__textContainer">
+						<div className="playlistCard__textCont">
 						<a href="#">{props.title}</a>
 							<div>{props.desc}</div>
 						</div>

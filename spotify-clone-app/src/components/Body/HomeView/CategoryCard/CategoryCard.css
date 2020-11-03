@@ -1,17 +1,17 @@
 
-.playlistCard:hover .playlistCard__playIcon{
+.categoryCard:hover .categoryCard__playIcon{
 	visibility:visible;
 	opacity: 1;
 	bottom:20px;
 	transition: 400ms;
 }
 
-.playlistCard__card:hover{
+.categoryCard__card:hover{
 	background:#282828;
 	cursor:pointer;
 }
 
-.playlistCard__card{
+.categoryCard__card{
 	-webkit-box-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
@@ -22,42 +22,42 @@
 	isolation: isolate;
 	width: 100%;
 	max-width:150px;
-	margin:15px;
-	height:260px;
+	margin:10px;
+	height:200px;
 	-webkit-transition: background-color .3s ease;
 	transition: background-color .3s ease;
 	overflow:hidden;
 }
 
-.playlistCard__cardInner{
+.categoryCard__cardInner{
 
 }
 
-.playlistCard__imgCont{
+.categoryCard__imgCont{
 	position:relative;
 	margin-bottom:16px;
 }
 
-.playlistCard__imgCont img{
+.categoryCard__imgCont img{
 	height:150px;
 	width:150px;
 	/* object-fit: contain; */
 }
 
-.playlistCard__textCont{
+.categoryCard__textCont{
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 	line-height: 16px;
 }
 
-.playlistCard__textCont a{
+.categoryCard__textCont a{
 	color: #fff;
 	text-decoration: none;
 	font-weight:bold;
 }
 
-.playlistCard__textCont div{
+.categoryCard__textCont div{
 	margin-top: 4px;
 	font-weight: 400;
 	color: #b3b3b3;
@@ -70,7 +70,7 @@
 	-webkit-box-orient: vertical;
 }
 
-.playlistCard__playIcon{
+.categoryCard__playIcon{
 	display: flex;
 	width: 40px;
 	height: 40px;
@@ -86,7 +86,7 @@
 	left:5px;
 }
 
-.playlistCard__playIcon:hover{
+.categoryCard__playIcon:hover{
 	transform: scale(1.1);
 	cursor:auto;
 }

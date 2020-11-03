@@ -1,6 +1,7 @@
 {
   "name": "spotify-clone-app",
   "version": "0.1.0",
+  "homepage": "http://lior-dev.com/spotify-clone",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
