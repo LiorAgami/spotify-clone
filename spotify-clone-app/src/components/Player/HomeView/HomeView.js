@@ -32,6 +32,7 @@ function HomeView() {
 						desc={playlist?.track?.artists.map((artist) => artist.name).join(", ")}
 						key={playlist.id + String(Math.random())}
 						trackId={playlist?.track?.id}
+						playlistId={playlist.id}
 						isTrack={true}
 					/>
 				))}
