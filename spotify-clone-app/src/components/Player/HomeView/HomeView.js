@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDataLayerValue } from '../../../state/DataLayer';
-import PlaylistCard from './PlaylistCard/PlaylistCard';
+import PlaylistCard from '../../../shared/PlaylistCard/PlaylistCard';
 import './HomeView.css';
 
 function HomeView() {
 
 	const [{ featured_playlists, recent_played_playlists, top_artists }] = useDataLayerValue();
-
+//todo - refactor to playlists_lists view and use it from search also
 	return (
-	<div>
+	<div> 
 		<section>
 			<h2 className="sectionTitle">FEATURED PLAYLISTS</h2>
 			<div className="cardsContainer">

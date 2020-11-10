@@ -8,19 +8,14 @@ import './SidebarOption.css';
 const spotify = new SpotifyWebApi();
 
 function SidebarOption({ page, title, Icon, playlistId, isPlaylist }) {
+	
 	const [{ active_page, current_playing_playlist }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	let classNames = (page == active_page && !playlistId ? 'active sidebarOption' : 'sidebarOption');
 
 	if(isPlaylist) classNames =  `${classNames} isPlaylist`;
-
-	const navigateClient = () => {
-		if(page == 'Home') return goBackToHome();
-		else if(page == 'Playlist') return getPlaylistData();
-		else if(page == 'Library') return goToLibrary();
-		else if(page == 'Search') return goToSearch();
-	}
+	
 
 	const getPlaylistData = () => {
 
@@ -66,6 +61,15 @@ function SidebarOption({ page, title, Icon, playlistId, isPlaylist }) {
 			active_page:'Search'
 		})
 	}
+
+	const navigateClient = () => pagesCallbacks[page]();
+
+	const pagesCallbacks = {
+		'Home':goBackToHome,
+		'Playlist':getPlaylistData,
+		'Library':goToLibrary,
+		'Search':goToSearch,
+	};
 
 	return (
 		<div onClick={navigateClient} className={classNames}>

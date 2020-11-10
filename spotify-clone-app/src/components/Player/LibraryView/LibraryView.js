@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDataLayerValue } from '../../../state/DataLayer';
-import PlaylistCard from '../HomeView/PlaylistCard/PlaylistCard';
+import PlaylistCard from '../../../shared/PlaylistCard/PlaylistCard';
 
 function HomeView() {
 

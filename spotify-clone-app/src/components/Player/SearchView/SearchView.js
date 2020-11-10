@@ -19,7 +19,8 @@ function SearchView({ spotify }) {
 							imgUrl={cat?.icons[0]?.url}
 							height={cat?.icons[0]?.height}
 							width={cat?.icons[0]?.width}
-						/>
+							playlistId={cat.id}
+						/>			
 					))}
 				</div>
 			</section>
