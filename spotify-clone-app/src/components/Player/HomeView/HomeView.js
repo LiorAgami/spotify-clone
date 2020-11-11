@@ -6,6 +6,7 @@ import './HomeView.css';
 function HomeView() {
 
 	const [{ featured_playlists, recent_played_playlists, top_artists }] = useDataLayerValue();
+
 //todo - refactor to playlists_lists view and use it from search also
 	return (
 	<div> 
@@ -19,6 +20,7 @@ function HomeView() {
 						title={playlist.name}
 						desc={playlist.description}
 						key={playlist.id + String(Math.random())}
+						isPlaylist={true}
 					/>
 				))}
 			</div>
@@ -46,6 +48,8 @@ function HomeView() {
 						title={artist?.name}
 						desc="Artist"
 						key={artist.id + String(Math.random())}
+						artistId={artist?.id}
+						isArtist={true}
 					/>
 				))}
 			</div>

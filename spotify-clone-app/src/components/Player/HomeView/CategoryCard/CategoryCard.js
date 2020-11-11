@@ -10,32 +10,22 @@ const spotify = new SpotifyWebApi();
 function CategoryCard({ name, imgUrl, height, width, playlistId, trackId, isTrack}) {
 
 	const [{}, dispatch] = useDataLayerValue();
-	const [{volume, repeat}, soundDispatch] = useSoundLayerValue();
+	const [{ volume, repeat }, soundDispatch] = useSoundLayerValue();
 
 	const viewCategoryPlaylists = () => {
 		
 		const playlist_id = playlistId || '';
 		if(!playlist_id) return;
 
-		return spotify.getCategoryPlaylists(playlist_id, {market:'IL'}).then((category_playlists) => {
-	
-			dispatch({
-				type: 'SET_CATEGORY_PLAYLISTS',
-				category_playlists
-			});
-
-			// dispatch({
-			// 	type: 'SET_ACTIVE_PAGE',
-			// 	active_page:'Library'
-			// });
-			
-			dispatch({
-				type: 'SET_PLAYLISTS',
-				playlists: category_playlists
-			});
-
+		return spotify.getCategoryPlaylists(playlist_id, {market:'IL'})
+			.then((category_playlists) => {
+				dispatch({
+					type: 'SET_CATEGORY_PLAYLISTS',
+					category_playlists: category_playlists?.playlists?.items
+				});
 		});
 	}
+
 	return ( 
 		<div className="categoryCard" onClick={viewCategoryPlaylists}>
 			<div className="categoryCard__Row">

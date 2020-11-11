@@ -18,6 +18,7 @@ function HomeView() {
 							title={playlist.name}
 							desc={playlist.description}
 							key={playlist.id}
+							isPlaylist={true}
 						/>
 					))}
 				</div>

@@ -10,7 +10,6 @@ function SongRow({ trackItem, index }) {
 	const [{ track, current_playing_playlist, current_displayed_playlist, track_index }, dispatch] = useDataLayerValue();
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
-	//TODO -refactor to a better solution
 	const setActive = (e) => {
 		let elems = document.querySelectorAll(".songRow.active");
 		[].forEach.call(elems, function(el) {
@@ -22,14 +21,16 @@ function SongRow({ trackItem, index }) {
 	}
 
 	const pauseTrack = () => {
-		if((current_playing_playlist?.tracks?.items[index]?.track?.id == trackItem?.id)){
+		// if(current_playing_playlist?.tracks?.items[index]?.track?.id == trackItem?.id || 
+		// 	current_displayed_playlist?.tracks?.items[track_index]?.id != track?.id
+		// ) {
 			soundDispatch({
 				type: 'SET_PLAYING',
 				playing: false,
 			});
 
-			return;
-		}
+		// 	return;
+		// }
 	}
 
 	const playTrack = (trackItem) => {
@@ -77,7 +78,7 @@ function SongRow({ trackItem, index }) {
 					{playing && track?.id == trackItem?.id && track_index == index ? (
 						<div>
 							<Equalizer className="songRow__equalizer" />
-							<span className="songRow__indexIcon"><PauseIcon onClick={(e) => {pauseTrack(trackItem)}}/></span>
+							<span className="songRow__indexIcon"><PauseIcon onClick={pauseTrack}/></span>
 						 </div>
 					) : (
 						<span className="songRow__indexIcon"><PlayArrowIcon onClick={(e) => {playTrack(trackItem)}}/></span>

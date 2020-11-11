@@ -69,7 +69,7 @@ const reducer = (state, action) => {
 				...state,
 				categories:action.categories
 			};
-		case 'SET_CATEGORY_PLAYLIST':
+		case 'SET_CATEGORY_PLAYLISTS':
 			return {
 				...state,
 				category_playlists:action.category_playlists

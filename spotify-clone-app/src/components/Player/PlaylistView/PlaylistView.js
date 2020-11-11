@@ -14,8 +14,6 @@ function PlaylistView({ spotify }) {
 	const [{ playing, repeat }, soundDispatch] = useSoundLayerValue();
 
 	const pauseTrack = () => {
-		if(!(current_displayed_playlist?.tracks?.items[track_index]?.track?.id == track?.id)) return;
-
 		soundDispatch({
 			type: 'SET_PLAYING',
 			playing: false,
@@ -81,7 +79,8 @@ function PlaylistView({ spotify }) {
 				{current_displayed_playlist?.tracks?.items.map((item, ind) => (
 					<SongRow
 						key={item.id + String(ind)}
-						index={ind} trackItem={item?.track}
+						index={ind} 
+						trackItem={item['track'] || item}
 					/>
 				))}
 			</div>

@@ -64,6 +64,8 @@ function Footer() {
 
 	const playPrevOrNextSong = (songIndex) => {
 		let track = current_playing_playlist?.tracks?.items[songIndex]?.track;
+		track = track || current_playing_playlist?.tracks?.items[songIndex];
+		
 		if(!track) return;
 
 		dispatch({
@@ -105,7 +107,7 @@ function Footer() {
 
 				let randomtrack_index = Math.floor((Math.random() * current_playing_playlist?.tracks?.items?.length));
 				let randomTrack = current_playing_playlist?.tracks?.items[randomtrack_index]?.track;
-
+				randomTrack = randomTrack || current_playing_playlist?.tracks?.items[randomtrack_index];
 				if(track === randomTrack) return;
 
 				dispatch({

@@ -13,7 +13,8 @@ function PlaylistCard( props ) {
 	const [ { volume, repeat }, soundDispatch] = useSoundLayerValue();
 	
 	const getPlaylistOrTrack = (cb, e) => {
-		let isPlaylist = !props?.isTrack;
+		let isPlaylist = props?.isPlaylist;
+		let isArtist = props?.artistId;
 		const callback = typeof cb == 'function' ? cb : null;
 		
 		if(e) e.stopPropagation();
@@ -39,39 +40,79 @@ function PlaylistCard( props ) {
 
 				if(callback) callback(track);
 			});
+		} else if(!isArtist) {
+				const track_id = props?.trackId || '';
+			if(!track_id) return;
+
+			return spotify.getTrack(track_id, {market:'IL'}).then((playlist_items) => {
+				let adjusted_playlist = {
+					isTrack:true,
+					tracks:{
+						items:[{track:playlist_items}],
+						artists:[playlist_items.artists]
+					},
+					images:[{url:playlist_items?.album?.images[0]?.url}],
+					name:playlist_items.name,
+					description:playlist_items.description
+				};
+
+				dispatch({
+					type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
+					playlist_items:adjusted_playlist
+				});
+
+				dispatch({
+					type: 'SET_CURRENT_PLAYING_PLAYLIST',
+					playlist_items:adjusted_playlist
+				});
+				
+				if(callback) callback(playlist_items);
+
+			});
+		} else {
+			
+			const artist_id = props?.artistId;
+
+			if(!artist_id) return;
+
+			return spotify.getArtist(artist_id).then((artist) => {
+				
+				let artist_data = artist;
+
+				spotify.getArtistTopTracks(artist_id, 'IL').then((playlist_items) => {
+					let track = playlist_items?.tracks[0];
+
+					let adjusted_playlist = {
+					tracks:{
+						items:[...playlist_items?.tracks],
+						artists:[artist_data.artists]
+					},
+					images:[{url:artist_data?.images[0]?.url}],
+					name:artist_data.name,
+					description:artist_data.description
+				};
+
+					dispatch({
+						type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
+						playlist_items:adjusted_playlist
+					});
+
+					dispatch({
+						type: 'SET_CURRENT_PLAYING_PLAYLIST',
+						playlist_items:adjusted_playlist
+					});
+
+					if(callback) callback(track);
+
+				});
+
+			});
 		}
 
-		const track_id = props?.trackId || '';
-		if(!track_id) return;
-
-		return spotify.getTrack(track_id, {market:'IL'}).then((playlist_items) => {
-			let adjusted_playlist = {
-				isTrack:true,
-				tracks:{
-					items:[{track:playlist_items}],
-					artists:[playlist_items.artists]
-				},
-				images:[{url:playlist_items?.album?.images[0]?.url}],
-				name:playlist_items.name,
-				description:playlist_items.description
-			};
-
-			dispatch({
-				type: 'SET_CURRENT_DISPLAYED_PLAYLIST',
-				playlist_items:adjusted_playlist
-			});
-
-			dispatch({
-				type: 'SET_CURRENT_PLAYING_PLAYLIST',
-				playlist_items:adjusted_playlist
-			});
-			
-			if(callback) callback(playlist_items);
-
-		});
+	
 	}
 
-	const showPlaylistView = (playlist_items) => {
+	const showPlaylistView = () => {
 		dispatch({
 			type: 'SET_ACTIVE_PAGE',
 			active_page:'Playlist'
