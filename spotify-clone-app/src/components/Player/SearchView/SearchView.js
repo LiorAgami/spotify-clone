@@ -9,8 +9,6 @@ function SearchView({ spotify }) {
 
 	const [{ categories, category_playlists }, dispatch] = useDataLayerValue();
 
-	console.log(category_playlists);
-
 	return (
 		<div>
 			{!category_playlists.length ? (
