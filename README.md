@@ -1,7 +1,8 @@
 # Spotify Clone
 
 
-This Spotify Clone App was built for fun and for learning new technologies and techniques
+This Spotify Clone App was built for fun and for learning new technologies and techniques.
+
 It includes the following technologies: React, React Hooks, React Context Api, Rxjs, Material-ui and  [Spotify Developers API](https://developer.spotify.com/documentation/web-api/) , [Spotify Web API JS](https://github.com/JMPerez/spotify-web-api-js).
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
@@ -26,8 +27,8 @@ https://lior-dev.com/spotify-clone
 You'll need a [Spotify Client ID](https://developer.spotify.com/dashboard/applications).
 
 ```bash
-$ git clone https://github.com/francoborrelli/spotify-react-web-client.git
-$ cd spotify-react-web-client
+$ git clone https://github.com/LiorAgami/spotify-clone.git
+$ cd spotify-clone-app
 $ npm i
 ```
 
