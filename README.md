@@ -1,7 +1,8 @@
 # Spotify Clone
 
 
-This Spotify Clone App was built for fun and for learning new technologies and techniques
+This Spotify Clone App was built for fun and for learning new technologies and techniques.
+
 It includes the following technologies: React, React Hooks, React Context Api, Rxjs, Material-ui and  [Spotify Developers API](https://developer.spotify.com/documentation/web-api/) , [Spotify Web API JS](https://github.com/JMPerez/spotify-web-api-js).
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
