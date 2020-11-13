@@ -27,8 +27,8 @@ https://lior-dev.com/spotify-clone
 You'll need a [Spotify Client ID](https://developer.spotify.com/dashboard/applications).
 
 ```bash
-$ git clone https://github.com/francoborrelli/spotify-react-web-client.git
-$ cd spotify-react-web-client
+$ git clone https://github.com/LiorAgami/spotify-clone.git
+$ cd spotify-clone-app
 $ npm i
 ```
 
